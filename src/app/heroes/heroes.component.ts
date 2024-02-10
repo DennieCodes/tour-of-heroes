@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Hero } from '../interfaces/hero';
 import { HeroService } from '../hero.service';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UpperCasePipe } from '@angular/common';
 import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
+import { MessageService } from '../message.service';
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ export class HeroesComponent {
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
+    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
   }
 
   getHeroes(): void {
@@ -30,5 +32,8 @@ export class HeroesComponent {
       .subscribe(heroes => this.heroes = heroes);
   }
 
-  constructor(private heroService: HeroService) {}
+  constructor(
+    private heroService: HeroService,
+    private messageService: MessageService
+  ) {}
 }
